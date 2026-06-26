@@ -1788,6 +1788,10 @@
       renderContent();
     }
 
+function triggerSystemPrint() {
+      window.print();
+    }
+
     // --- MODAL ENGINE ---
     function openSiswaModal(id = null) {
       const modal = document.getElementById('modal-container');
@@ -2030,6 +2034,22 @@
       `;
     }
 
+   function saveSMForm(e) {
+      e.preventDefault();
+      const form = e.target;
+      state.suratMasuk.unshift({
+        id: `SM-${Date.now()}`,
+        noSurat: form.noSurat.value,
+        asalSurat: form.asalSurat.value,
+        perihal: form.perihal.value,
+        tanggalTerima: form.tanggalTerima.value,
+        scanFile: "scan_dokumen.pdf"
+      });
+      showNotification("Arsip surat masuk berhasil disimpan.");
+      closeModal();
+      renderSuratTab(document.getElementById('main-content'));
+    }
+
     function openSKModal() {
       const modal = document.getElementById('modal-container');
       modal.className = "fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4";
@@ -2140,6 +2160,27 @@
 
       document.getElementById('sk-penerima').value = penerima;
       document.getElementById('sk-keterangan').value = keterangan;
+    }
+
+    function updateModalSKNo(tipe) {
+      document.getElementById('sk-modal-no-preview').textContent = generateLetterNumber(tipe);
+    }
+
+    function saveSKForm(e) {
+      e.preventDefault();
+      const form = e.target;
+      const tipe = form.tipe.value;
+      state.suratKeluar.unshift({
+        id: `SK-${Date.now()}`,
+        tipe: tipe,
+        noSurat: generateLetterNumber(tipe),
+        tanggalKirim: state.settings.printDateLetter,
+        penerima: form.penerima.value,
+        keterangan: form.keterangan.value
+      });
+      showNotification("Surat keluar berhasil didaftarkan.");
+      closeModal();
+      renderSuratTab(document.getElementById('main-content'));
     }
 
     function closeModal() {
