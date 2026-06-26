@@ -1,3 +1,5 @@
+semua-ada revisi
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -2140,6 +2142,13 @@
 
       document.getElementById('sk-penerima').value = penerima;
       document.getElementById('sk-keterangan').value = keterangan;
+    }
+      showNotification("Surat keluar berhasil didaftarkan.");
+      closeModal();
+      renderSuratTab(document.getElementById('main-content'));
+    }
+    function updateModalSKNo(tipe) {
+      document.getElementById('sk-modal-no-preview').textContent = generateLetterNumber(tipe);
     }
 
     function closeModal() {
